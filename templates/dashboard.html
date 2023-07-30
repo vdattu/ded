@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    {% if user_data %}
+    <h1>Welcome to Your Dashboard, {{ user_data[1] }}!</h1>
+    <p>Member ID: {{ user_data[0] }}</p>
+    <p>Email: {{ user_data[2] }}</p>
+    <p>Mobile: {{ user_data[3] }}</p>
+    <!-- Add other user details as required -->
+
+    <p>Membership: {{ user_data[4] }}</p>
+    <p>Game: {{ game }}</p>
+    <p>Amount Paid: {{ amount }}</p>
+    <p>Status: {{ user_data[5] }}</p>
+
+    {% if user_data[5] == 'success' %}
+    <!-- Display additional dashboard content for users who completed the payment -->
+    <!-- For example, uploaded certificate and photo files -->
+    <!-- <h2>Uploaded Certificate:</h2>
+    <img src="{{ url_for('static', filename=user_data.certificate) }}" alt="Uploaded Certificate">
+
+    <h2>Uploaded Photo:</h2>
+    <img src="{{ url_for('static', filename=user_data.photo) }}" alt="Uploaded Photo"> -->
+    {% else %}
+    <!-- If the user hasn't completed the payment, you can provide instructions or options for completing the payment -->
+    <p>Please complete your payment to access the dashboard.</p>
+    <a href="{{ url_for('payment') }}">Proceed to Payment</a>
+    {% endif %}
+    {% else %}
+    <p>You must log in to access the dashboard.</p>
+    <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+</body>
+
+</html>
