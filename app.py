@@ -570,18 +570,18 @@ def registeredgame(game):
             flash('Already registered!refer your games profile')
             return redirect(url_for('dashboard'))
         if request.method=='POST':
-            styles={'Butterfly Stroke','Breaststroke','Backstroke','Freestyle'}
+            s_styles={'Butterfly Stroke','Breaststroke','Backstroke','Freestyle'}
             b_tracks={'50m-Butterfly Stroke','100m-Butterfly Stroke','200m-Butterfly Stroke'}
             s_tracks={'50m-Breaststroke','100m-Breaststroke','200m-Breaststroke'}
             t_tracks= {'50m-Backstroke','100m-Backstroke','200m-Backstroke'}
             f_tracks={'50m-Freestyle','100m-Freestyle','200m-Freestyle'}
 
-            styles={i for i in request.form.keys() if i in styles}
+            styles={i for i in request.form.keys() if i in s_styles}
             if len(styles)==0:
                 flash('Select a category')
                 return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
             values=set(request.form.values())
-            form_values=values.difference(styles)
+            form_values=values.difference(s_styles)
             for i in styles:
                 if i=='Butterfly Stroke':
                     result1=b_tracks.difference(form_values)
@@ -611,7 +611,7 @@ def registeredgame(game):
                 cursor.close()
                 flash('Details Registered Successfully ')
                 subject='Doctors Olympiad Games registration'
-                body=f'You are successfully registered to {"\n".join(values)}\n\nThanks and regards\nDoctors Olympiad 2023'
+                body=f'You are successfully registered to {"/n".join(values)}\n\nThanks and regards\nDoctors Olympiad 2023'
                 sendmail(email_id,subject,body)
                 return redirect(url_for('dashboard'))
         return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
@@ -628,7 +628,52 @@ def registeredgame(game):
             return redirect(url_for('dashboard'))
         if request.method=='POST':
             print(request.form)
-        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+            a_styles={'Sprint', 'Pole Vault', 'Walkathon','Marathon'}
+            styles={i for i in request.form.keys() if i in a_styles}
+            values=set(request.form.values())
+            form_values=values.difference(a_styles)
+            print(form_values)
+            s_styles={'100m Sprint', 'Sprint', '200m Sprint', '400m Sprint', '800m Sprint'}
+            p_styles={'100 m Hurdles Pole Vault', '4 x 100 m Relay Pole Vault'}
+            d_styles={"Men's 10 km Walkathon","Women's 10 km Walkathon"}
+            f_styles={"Men's 10 km Marathon", "Men's 21 km Marathon","Women's 10 km Marathon", "Women's 21 km-Marathon"}
+        
 
+            if len(styles)==0:
+                flash('Select a category')
+                return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+            for i in styles:
+                if i=='Sprint':
+                    result1=s_styles.difference(form_values)
+                    if len(result1)==len(s_styles):
+                        flash('Select atleast one of the sub category')
+                        break
+                elif i=='Pole Vault':
+                    result2=p_styles.difference(form_values)
+                    if len(result2)==len(p_styles):
+                        flash('Select atleast one of the sub category')
+                        break
+                elif i=='Walkathon':
+                    result3=d_styles.difference(form_values)
+                    if len(result3)==len(d_styles):
+                        flash('Select atleast one of the sub category')
+                        break
+                elif i=='Marathon':
+                    result4=f_styles.difference(form_values)
+                    if len(result4)==len(f_styles):
+                        flash('Select atleast one of the sub category')
+                        break
+            else:
+                cursor = mydb.cursor(buffered=True)
+                for i in form_values:
+                    cursor.execute('insert into sub_games (game,id,category) values(%s,%s,%s)',[game,session.get('user'),i])
+                    mydb.commit()
+                cursor.close()
+                flash('Details Registered Successfully ')
+                subject='Doctors Olympiad Games registration'
+                body=f'You are successfully registered to {"/n".join(values)}\n\nThanks and regards\nDoctors Olympiad 2023'
+                sendmail(email_id,subject,body)
+                return redirect(url_for('dashboard'))
+        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
 if __name__ == '__main__':
     app.run(use_reloader=True,debug=True)
