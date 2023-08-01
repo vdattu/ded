@@ -19,23 +19,18 @@ app.secret_key = secret_key
 app.config['SESSION_TYPE'] = 'filesystem'
 excel.init_excel(app)
 Session(app)
-#mydb = mysql.connector.connect(host='localhost', user='root', password='Eswar@2001', db='doctors',pool_name='DED',pool_size=30)
-db= os.environ['RDS_DB_NAME']
+mydb = mysql.connector.connect(host='localhost', user='root', password='Eswar@2001', db='doctors',pool_name='DED',pool_size=30)
+'''db= os.environ['RDS_DB_NAME']
 user=os.environ['RDS_USERNAME']
 password=os.environ['RDS_PASSWORD']
 host=os.environ['RDS_HOSTNAME']
 port=os.environ['RDS_PORT']
 with mysql.connector.connect(host=host,user=user,password=password,db=db) as conn:
-    cursor=conn.cursor(buffered=True)
-    cursor.execute("CREATE TABLE if not exists register (ID int NOT NULL AUTO_INCREMENT,FirstName varchar(25) DEFAULT NULL,LastName varchar(25) DEFAULT NULL,Email varchar(50) DEFAULT NULL,PASSWORD longblob,mobileno bigint DEFAULT NULL,age int DEFAULT NULL,gender varchar(10) DEFAULT NULL,DOB date DEFAULT NULL,city text,address text,state text,country text,degree varchar(10) DEFAULT NULL,MCI_ID varchar(20) DEFAULT NULL,member varchar(20) DEFAULT NULL,SHIRT_SIZE enum('S','M','L','XL','XXL','XXXL','XXXXL') DEFAULT NULL,acception varchar(30) DEFAULT 'No',status varchar(20) NOT NULL DEFAULT 'pending',PRIMARY KEY (ID),UNIQUE KEY Email (Email),UNIQUE KEY mobileno (mobileno))")
-    cursor.execute("CREATE TABLE if not exists game (ID INT, enum('ATHLETICS','ARCHERY','BADMINTON','BASKETBALL','BALL BADMINTON','CARROMS','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS','CRICKET WHITE BALL','HARD TENNIS CRICKET','WOMEN BOX CRICKET','VOLLEY BALL','FOOTBALL','KHO KHO','KABADDI','THROW BALL','TUG OF WAR'),AMOUNT INT UNSIGNED)")
-    cursor.execute("create table if not exits games(game_name varchar(30),amount int unsigned,team_count int)")
-    cursor.execute("insert into games values(('ATHLETICS',1500,1),('ARCHERY',1500,1),('BADMINTON',1500,2),('BASKETBALL',10000,9),('BALL BADMINTON',10000,7),('CARROMS',1500,2),('CHESS',1500,1),('CYCLOTHON',1500,1),('JUMPS',1500,1),('SWIMMING',1500,1),('THROW',1500,1),('ROWING',1500,1),('SHOOTING',1500,1),('ROLLER SKATING',1500,1),('FENCING',1500,1),('TENNIKOIT',1500,1),('TABLE TENNIS',1500,2),('LAWN TENNIS',1500,2),('CRICKET WHITE BALL',30000,14),('HARD TENNIS CRICKET',20000,14),('WOMEN BOX CRICKET',10000,7),('VOLLEY BALL',10000,9),('FOOTBALL',10000,11),('KHO KHO',10000,12),('KABADDI',10000,10),('THROWBALL',10000,10),('TUG OF WAR',5000,10))")
-    cursor.execute("create table if not exists payments(ordid varchar(36),id int,game enum('ATHLETICS','ARCHERY','BADMINTON','BASKETBALL','BALL BADMINTON','CARROMS','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS','CRICKET WHITE BALL','HARD TENNIS CRICKET','WOMEN BOX CRICKET','VOLLEY BALL','FOOTBALL','KHO KHO','KABADDI','THROW BALL','TUG OF WAR'),date timestamp default now() on update now(),foreign key(id) references register(id))")
-    cursor.execute("CREATE TABLE if not exists sub_games (game enum('ATHLETICS','ARCHERY','BADMINTON','BASKETBALL','BALL BADMINTON','CARROMS','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS','CRICKET WHITE BALL','HARD TENNIS CRICKET','WOMEN BOX CRICKET','VOLLEY BALL','FOOTBALL','KHO KHO','KABADDI','THROW BALL','TUG OF WAR'),id int primary key(id) ,category varchar(50),team_number varchar(10) unique, date timestamp default current_timestamp on update current_timestamp,foreign key(id) reference register(id))")
-    cursor.execute("create table if not exists teams(teamid int,id int,status enum('Accept','Pending'),foreign key(teamid) references sub_games(team_number),foreign key(id) references register(id))")
-
-mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,pool_name='DED',pool_size=30)
+  cursor=conn.cursor(buffered=True)
+  cursor.execute("CREATE TABLE if not exists register (ID int NOT NULL AUTO_INCREMENT,FirstName varchar(25) DEFAULT NULL,LastName varchar(25) DEFAULT NULL,Email varchar(50) DEFAULT NULL,PASSWORD longblob,mobileno bigint DEFAULT NULL,age int DEFAULT NULL,gender varchar(10) DEFAULT NULL,DOB date DEFAULT NULL,city text,address text,state text,country text,degree varchar(10) DEFAULT NULL,MCI_ID varchar(20) DEFAULT NULL,member varchar(20) DEFAULT NULL,SHIRT_SIZE enum('S','M','L','XL','XXL','XXXL','XXXXL') DEFAULT NULL,acception varchar(30) DEFAULT 'No',status varchar(20) NOT NULL DEFAULT 'pending',PRIMARY KEY (ID),UNIQUE KEY Email (Email),UNIQUE KEY mobileno (mobileno))")
+  cursor.execute("CREATE TABLE if not exists game (ID INT, GAME ENUM('ATHLETICS','ARCHERY','BADMINTON','CARROM','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS'),FOREIGN KEY(ID) REFERENCES register(ID),AMOUNT INT UNSIGNED)")
+  cursor.close()
+mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,pool_name='DED',pool_size=30)'''
 
 stripe.api_key='sk_test_51NTKipSDmVNK7hRpj4DLpymMTojbp0sntuHknEF9Kv3cGY79VkNbmBcfxDmTLXa9UIGKiiqp8drQQhzsjoia58Sm00Kuzg9vYt'
 
@@ -148,12 +143,10 @@ def register(user_accept):
             print(session.get('email'))
             cond=True if session.get('email') else False
             if cond!=True:
-                message='Please verify your email'
-                render_template('register.html',message=message)
+                return jsonify('Please verify your email')
             elif session['otp']!=otp:
-                message='Invalid OTP'
-                render_template('register.html',message=message)
-            email=email if session.get('email')==request.form['email'] else session.get('email')
+                return jsonify('Invalid Otp')
+            
             # Get the uploaded certificate and photo files
             certificate_file = request.files['certificate']
             photo_file = request.files['photo']
@@ -184,12 +177,12 @@ def register(user_accept):
 
 
             if count2 == 1:
-                message='Mobile number already exists.'
-
-                return render_template('register.html',message=message)
+                flash('Mobile number already exists.')
+                return render_template('register.html')
             elif count1 == 1:
                 flash('Email already in use')
-                return render_template('register.html',message=message)
+                
+                return render_template('register.html')
 
 
             # Hash the password using bcrypt
@@ -202,23 +195,45 @@ def register(user_accept):
                 'country': country, 'degree': degree, 'mci': mci, 'game': game, 'selectmember': selectmember,
                 'acception': acception, 'amount': amount,'shirtsize': shirtsize,
             }
-            cursor=mydb.cursor(buffered=True)
+            
+
+            subject = 'Email Confirmation'
+            body = f"Thanks for signing up\n\nfollow this link for further steps-{url_for('confirm', token=token(data, salt), _external=True)}"
+            sendmail(to=email, subject=subject, body=body)
+
+            flash('Confirmation link sent to mail')
+
+        return render_template('register.html')
+    else:
+        abort(404,'Page not found')
+
+@app.route('/confirm/<token>')
+def confirm(token):
+    try:
+        serializer = URLSafeTimedSerializer(secret_key)
+        data = serializer.loads(token, salt=salt, max_age=3600)
+    except Exception as e:
+        return 'Link Expired register again'
+    else:
+        cursor = mydb.cursor(buffered=True)
+        name = data['email']
+        cursor.execute('SELECT COUNT(*) FROM register WHERE email=%s', [name])
+        count = cursor.fetchone()[0]
+        if count == 1:
+            cursor.close()
+            flash('You are already registered!')
+            return redirect(url_for('login'))
+        else:
             cursor.execute('INSERT INTO register(FirstName,LastName,Email,password,mobileno,age,gender,DOB,city,address,state,country,degree,MCI_ID,member,shirt_size,acception) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', [data['fname'], data['lname'], data['email'], data['password'], data['mobile'], data['age'], data['gender'], data['dob'], data['city'], data['address'], data['state'], data['country'], data['degree'], data['mci'], data['selectmember'],data['shirtsize'], data['acception']])
             cursor.execute('select id from register where email=%s', [data['email']])
             eid=cursor.fetchone()[0]
             cursor.execute('INSERT INTO game (id,game,amount) VALUES (%s,%s,%s)', [eid,data['game'],data['amount']])
-            print(game)
-            
             mydb.commit()
             cursor.close()
-            session.pop('otp')
-            session.pop('email')
-            session['user']=eid
             flash ('Registration successful! Complete the payment process.')
             return redirect(url_for('payment',eid=eid,game=data['game']))
-        return render_template('register.html',message='')
-    else:
-        abort(404,'Page not found')
+    
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -285,8 +300,9 @@ def generate_otp():
         session['email']=email
         session['otp']=otp
     subject = 'Email Confirmation'
-    body = f"Your One Time Password for Registration is {otp}\n\nThanks & Regards\nIMA Doctors Olympiad"
+    body = f"Thanks for signing up\n\nfollow this link for further steps-{otp}"
     sendmail(to=email, subject=subject, body=body)
+    
     return jsonify({'message': 'OTP has been sent to your email.'})
 
 
@@ -404,28 +420,23 @@ def success(eid,ref,game,amount):
     cursor = mydb.cursor(buffered=True)
     cursor.execute('SELECT status from register WHERE id=%s', [eid])
     status=cursor.fetchone()[0]
-    cursor.execute('select gander from register where id=%s',[eid])
-    gender=cursor.fetchone()[0]
     if status=='pending':
         cursor.execute('update register set status=%s WHERE ID=%s',['success',eid])
         cursor.execute('INSERT into payments (ordid,id,game,amount) VALUES (%s,%s,%s,%s)',[ref,eid,game,amount])
-        if game in ('CHESS','ROWING','FENCING','CYCLOTHON','ARCHERY','ROLLER SKATING'):
-                category="Men's singles" if gender=='Male' else "Women's singles"
-                cursor.execute('insert into sub_games (game,id,category) values(%s,%s,%s)',[game,eid,category])
         mydb.commit()
         cursor.close()
         flash('Payment Successful ! Login in to continue.')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('login'))
     else:
         cursor.execute('INSERT into payments (ordid,id,game,amount) VALUES (%s,%s,%s,%s)',[ref,eid,game,amount])
         cursor.execute('INSERT INTO game (id,game,amount) VALUES (%s,%s,%s)', [eid,game,amount])
-        if game in ('CHESS','ROWING','FENCING','CYCLOTHON','ARCHERY','ROLLER SKATING'):
-                category="Men's singles" if gender=='Male' else "Women's singles"
-                cursor.execute('insert into sub_games (game,id,category) values(%s,%s,%s)',[game,eid,category])
         mydb.commit()
         cursor.close()
         flash('Payment Successful')
         return redirect(url_for('dashboard'))
+    
+
+
 '''@app.route('/dashboard')
 def dashboard():
     if session.get('user'):
@@ -447,8 +458,18 @@ def dashboard():
     else:
         flash('You must log in to access the dashboard.', 'error')
         return redirect(url_for('login'))'''
-
-
+@app.route('/dashboard')
+def dashboard():
+    if session.get('user'):
+        return render_template('my-account.html')
+    else:
+        return redirect(url_for('login'))
+@app.route('/individual')
+def individual():
+    if session.get('user'):
+        return render_template('game-cards-individual.html')
+    else:
+        return redirect(url_for('login'))
 @app.route('/sport/<game>',methods=['GET','POST'])
 def sport(game):
     if session.get('user'):
@@ -481,11 +502,10 @@ def sport(game):
                         return redirect(url_for('dashboard'))
                     return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
                 else:
-                    if request.method=='POST':
-                        return '<h1>Updates are on the way see you soon</h1>'
+                    if game in ('TABLETENNIS','LAWNTENNIS','BADMINTON','CARROMS'):
 
-                    return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
-                    #pass
+                        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+                    pass
 
 
 
@@ -498,8 +518,8 @@ def sport(game):
                     return game
     else:
         return redirect(url_for('login'))
-@app.route('/dashboard')
-def dashboard():
+@app.route('/allindividualgames')
+def allindividualgames():
     if session.get('user'):
         cursor = mydb.cursor(buffered=True)
         cursor.execute('SELECT game_name from games where game_name not in (select game from game where id=%s)',[session.get('user')])
@@ -514,84 +534,12 @@ def dashboard():
         cursor.execute('select email from register where id=%s',[session.get('user')])
         email_id=cursor.fetchone()[0]
         cursor.close()'''
-        return render_template('my-account.html',games=games,add_games=add_games)
+        return render_template('userdashboard.html',games=games,add_games=add_games)
     else:
         return redirect(url_for('login'))
-@app.route('/edit',methods=['GET','POST'])
-def edit_profile():
-    if session.get('user'):
-        cursor=mydb.cursor(buffered=True)
-        eid=session.get('user')
-        cursor.execute("select * from register where id =%s",[eid])
-        data=cursor.fetchone()
-        print(data)
-        cursor.close()
-        if request.method=='POST':
-            firstname=request.form['fname']
-            print(firstname)
-            lastname=request.form['lname']
-            email=request.form['email']
-            mobile=request.form['mobile']
-            age=request.form['age']
-            gender=request.form['gender']
-            dob=request.form['dob']
-            city=request.form['city']
-            address=request.form['address']
-            state=request.form['state']
-            country=request.form['country']
-            shirtsize=request.form['shirtsize']
-            cursor=mydb.cursor(buffered=True)
-            cursor.execute('update register set FirstName=%s,LastName=%s,Email=%s,mobileno=%s,age=%s,gender=%s,DOB=%s,city=%s,address=%s,state=%s,country=%s,SHIRT_SIZE=%s where id=230024',[firstname,lastname,email,mobile,age,gender,dob,city,address,state,country,shirtsize])
-            mydb.commit()
-            cursor.close()
-            return redirect(url_for('home'))
-        return render_template('edits.html',data=data)
-    else:
-        return redirect(url_for('login'))
-@app.route('/all payments')
-def payment_orders():
-    if session.get('user'):
-        cursor=mydb.cursor(buffered=True)
-        eid=session.get('user')
-        cursor.execute('select * from payments where id = %s',[eid])
-        payment = cursor.fetchall()
-        cursor.close()
-        return render_template('Payments.html',payment = payment)
-    else:
-        return redirect(url_for('login'))
-@app.route('/individual')
-def individual():
-    if session.get('user'):
-        eid=session.get('user')
-        a=['ATHLETICS','ARCHERY','BADMINTON','CARROM','CHESS','CYCLOTHON','JUMPS','SWIMMING','THROW','ROWING','ROLLER_SKATING','FENCING','TENNIKOIT','TABELTENNIS','LAWNTENNIS','BALL_BADMINTON']
-        cursor = mydb.cursor(buffered=True)
-        cursor.execute("SELECT * FROM sub_games WHERE id=%s",[eid])
-        data1 = cursor.fetchall()
-        cursor.close()
-        data=[]
-        for i in data1:
-            if i[0] in a:
-                data.append(i)
-        return render_template('Individualgames.html',data=data)
-    else:
-        return redirect(url_for('login'))
-@app.route('/team')
-def team():
-    if session.get('user'):
-        eid=session.get('user')
-        a=['BALL_BADMINTON','CRICKET_WHITE_BALL','HARD_TENNIS_CRICKET','WOMEN_BOX_CRICKET','VOLLEYBALL','FOOTBALL','KHO_KHO','KABADDI','THROW_BALLTUG_OF_WAR','BASKET_BALL']
-        cursor = mydb.cursor(buffered=True)
-        cursor.execute("SELECT * FROM sub_games WHERE id=%s",[eid])
-        data1 = cursor.fetchall()
-        cursor.close()
-        data=[]
-        for i in data1:
-            if i[0] in a:
-                data.append(i)
-        return render_template('teams.html',data=data)
-    else:
-        return redirect(url_for('login'))
-
+@app.route('/allteamgames')
+def allteamgames():
+    return render_template('game-cards-team.html')
 @app.route('/buyaddon/<game>')
 def buyaddon(game):
     if session.get('user'):

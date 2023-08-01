@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Dashboard</title> 
+    <link rel="stylesheet" href="style.css">
+    <style>.large_nav{
+      display: flex;
+      justify-content: space-between;
+  
+  }
+  .bar{
+      border: 0.5px solid black;
+      background-color: black;
+      height: 20px;
+      margin: auto 0px ;
+  }
+  .navbar_menus{
+      padding-left: 40px;
+  }
+  .navbar_menus ul li{
+      margin-left: 20px;
+      color: rgb(37, 37, 37);
+      font-weight: 500;
+  
+  }
+  .nav-item:hover{
+      border-bottom: 2px solid blue;
+      cursor: pointer;
+      transition: 0.1s;
+  }
+  .navToggleBtn{
+      border: none;
+      background-color: white;
+      display: none;
+  }
+  .navToggleBtn  i{
+      outline: none;
+      font-size: 26px;
+  
+  }
+  @keyframes scaleAnimation {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1); /* You can adjust the scale factor as per your preference */
+      }
+    }
+    
+    .registerBtn {
+      display: inline-block;
+      padding: 5px 20px;
+  
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+      color: #000;
+      background-color: blue;
+      color: white;
+      border-radius: 2px;
+    }
+    
+    .registerBtn {
+      animation: scaleAnimation 2s infinite;
+    }
+  
+  .gamesSection{
+      width: 90%;
+      margin: 100px auto;
+  }
+  .cardContainer{
+      display: flex;
+      flex-wrap:wrap ;
+      gap: 80px;
+      justify-content: center;
+      align-items: center;
+  }
+  .gameCard{
+      width: 250px;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+  
+      align-items: center;
+      border: 1px solid rgb(209, 209, 209);
+  }
+  .gameCard .text{
+      font-weight: 600;
+       font-family: monospace;
+       font-size: 15px;
+       text-align: left;
+       margin: 20px 0px;
+  }
+  .option{
+      background-color: bisque;
+      color: black;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+  }
+  .gameCard img{
+      width: 100%;
+      height: 170px;
+  }
+  .addNewGames{
+      margin-top: 180px;
+  }
+  footer{
+      margin-top: 200px;
+  }
+  .quickLinks {
+      margin-top: 20px;
+  }
+  .quickLinks a{
+  text-decoration: none;
+  color: black;
+  }
+    @media screen and  (max-width:979px) {
+      .bar{
+          display: none;
+      }
+      .navbar_menus ul   {
+          margin: 50px 0px;
+          padding: 0px;
+  
+      }
+      .navbar_menus ul .nav-item {
+          padding: 0px  20px ;
+          font-size: 18px;
+      }
+      .navbar_menus ul .nav-item:hover {
+          border: 0px ;
+          background-color: black;
+          width: 58%;
+  
+  
+      }
+      .navbar_menus ul .nav-item:hover a{
+          color: white;
+      }
+      .registerBtn{
+          margin-left: 20px;
+          margin-top: 10px;
+      }
+  .navToggleBtn{
+      display: block;
+  }
+  
+    }</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary  shadow-sm py-3">
+        <div class="container-fluid px-4">
+          <a class="navbar-brand" href="#"><img src="./Logo.png" width="250px" alt=""></a>
+          <button class=" navToggleBtn  " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="collapse navbar-collapse navbar_menus " id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-wrap    ">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+              </li>
+              <li class="bar">
+                
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 Managment Committe 
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="m-0"><a class="dropdown-item" href="#">National Level Commitee</a></li>
+                  <li class="m-0"><a class="dropdown-item" href="#">Another action</a></li>
+
+                </ul>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " >  Rules</a>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " >Contact </a>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " >Venue/Sports Schedule</a>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " >Games & Subgames </a>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="nav-item mt-2"  >
+                <a class="nav-link " >Login</a>
+              </li>
+              <li class="bar">
+                
+              </li>
+              <li class="mt-2" >
+                <a class="registerBtn " href="/register" >Register</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <section class="gamesSection">
+<div class="registeredGames">
+    <h3 >Registered Games</h3>
+   <div class="cardContainer mt-5">
+    <div class="gameCard border-1 -lg">
+        <img src="https://images.pexels.com/photos/2682543/pexels-photo-2682543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+        <div class="text">The Game</div>
+        <a href="/options" class="option">Select Options</a>
+    </div>
+
+    <div class="gameCard border-1  lg">
+        <img src="https://images.pexels.com/photos/2682543/pexels-photo-2682543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+        <div class="text">The Game</div>
+        <a href="/options" class="option">Select Options</a>
+    </div>
+   </div>
+</div>
+
+
+<div class="addNewGames">
+    <h3 >Add New Games</h3>
+   <div class="cardContainer mt-5">
+    <div class="gameCard border-1 lg">
+        <img src="https://images.pexels.com/photos/2682543/pexels-photo-2682543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+        <div class="text">The Game</div>
+        <a href="/options" class="option">Select Options</a>
+    </div>
+
+    <div class="gameCard border-1  lg">
+        <img src="https://images.pexels.com/photos/2682543/pexels-photo-2682543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+        <div class="text">The Game</div>
+        <a href="/options" class="option">Select Options</a>
+    </div>
+   </div>
+</div>
+      </section>
+      <footer class=" py-4 " >
+        <div class="container">
+          <div class="row footer_row justify-content-between">
+            <div class="col-md-4 mb-4">
+              <img src="./Logo.png" alt="Logo" class="img-fluid mb-3">
+              <p>Unite, Compete, Excel - Our Nation's Passion for Sports</p>
+              <div class="socialLinks d-flex flex-column">
+                <span><i class="fa fa-envelope"> </i> Email: doctorsolympaid2023@gmail.com</span><br>
+                <span><i class="bi bi-telephone"></i> Phone: 9759434567</span><br>
+                <span><i class="bi bi-telephone"></i> Mobile: 9759634567</span><br>
+              </div>
+              <div class="message d-flex gap-1">
+                <a href="https://api.whatsapp.com/send?phone=YOUR_WHATSAPP_NUMBER" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-whatsapp text-success "     ></i>
+                  </a>
+                  <a href="https://www.instagram.com/YOUR_INSTAGRAM_ACCOUNT" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-instagram text-danger" ></i>
+                  </a>
+              </div>
+            </div>
+            <div class="col-md-3 mb-4">
+              <h4>Get In Touch</h4>
+              <p>Indian Medical Association VIJAYAWADA Branch</p>
+              <span>DOCTORS SPORTS ACADEMY D.No.14: Beside GEMS Public School</span>
+              <span>Kaza Village, Mangalagiri Mandal, Guntur District, Andhra Pradesh</span>
+            </div>
+            <div class="col-md-3 mb-4">
+              <h4>Quick Links</h4>
+              <ul class="list-unstyled quickLinks">
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Return & Refund Policy</a></li>
+                <li><a href="#">Cancellation Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+      
+    <div class="subFooter text-center bg-primary text-white py-1">
+<h4>Designed By Codegnan &#169; All Right Reserved </h4>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

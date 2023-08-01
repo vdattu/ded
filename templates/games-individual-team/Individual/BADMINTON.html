@@ -313,21 +313,6 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 	<div id="yith-wapo-block-39" class="yith-wapo-block">
 
 	
-			<div id="yith-wapo-addon-695"
-				class="yith-wapo-addon yith-wapo-addon-type-radio  default-closed toggle-closed    "
-				data-min=""
-				data-max=""
-				data-exa=""
-				data-addon-type="radio"
-                 								style="
-				background-color: rgba(255,255,255,0);					">
-
-                <div class="addon-header">
-                    									<h4 class="wapo-addon-title toggle-closed">
-                        <span>Select Gender</span>
-										</h4>
-				
-                </div>
 
 				<div class="options-container default-closed"><div class="options  per-row-5 "
                             style="
@@ -341,92 +326,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 	class="yith-wapo-option selection-single "
 	data-replace-image="">
 
-	{% if gender=="Male" %}
-	<div class="label ">
-		<div class="option-container">
 
-			<!-- ABOVE / LEFT IMAGE -->
-			
-            <div class="radio-button-container">
-                <span class="radiobutton ">
-                    <!-- INPUT -->
-                    <input type="radio"
-                           id="yith-wapo-695-0"
-                           class="yith-wapo-option-value"
-                           name="male"
-                           value="Male"
-                           data-price="0"
-                                        data-price-type="fixed"
-                           data-price-method="free"
-                           data-first-free-enabled="no"
-                           data-first-free-options="0"
-                           data-addon-id="695"
-                                            >
-
-                </span>
-                <!-- LABEL -->
-                <label class="yith-wapo-label" for="yith-wapo-695-0">
-                    Male                    
-                    <!-- PRICE -->
-                                    </label>
-            </div>
-
-			<!-- UNDER / RIGHT IMAGE -->
-			
-		</div>
-		<!-- TOOLTIP -->
-		
-
-	</div>
-	{% endif %}
-
-	<!-- DESCRIPTION -->
-		<!-- Sold individually -->
-	
-</div>
-
-<div id="yith-wapo-option-695-1"
-	class="yith-wapo-option selection-single "
-	data-replace-image="">
-
-    {% if gender=="Female" %}
-	<div class="label ">
-		<div class="option-container">
-
-			<!-- ABOVE / LEFT IMAGE -->
-			
-            <div class="radio-button-container">
-                <span class="radiobutton ">
-                    <!-- INPUT -->
-                    <input type="radio"
-                           id="yith-wapo-695-1"
-                           class="yith-wapo-option-value"
-                           name="female"
-                           value="Female"
-                           data-price="0"
-                                        data-price-type="fixed"
-                           data-price-method="free"
-                           data-first-free-enabled="no"
-                           data-first-free-options="0"
-                           data-addon-id="695"
-                                            >
-
-                </span>
-                <!-- LABEL -->
-                <label class="yith-wapo-label" for="yith-wapo-695-1">
-                    Female                    
-                    <!-- PRICE -->
-                                    </label>
-            </div>
-
-			<!-- UNDER / RIGHT IMAGE -->
-			
-		</div>
-		<!-- TOOLTIP -->
-		
-
-	</div>
-	{% endif %}
 
 	<!-- DESCRIPTION -->
 		<!-- Sold individually -->
@@ -437,7 +337,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 					
 			</div>
 
-			
+{% if gender=="Male" %}
 			<div id="yith-wapo-addon-696"
 				class="yith-wapo-addon yith-wapo-addon-type-checkbox  default-closed toggle-closed conditional_logic   "
 				data-min=""
@@ -445,7 +345,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 				data-exa=""
 				data-addon-type="checkbox"
                  								data-addon_id="696"
-				data-conditional_logic_display="show"
+				data-conditional_logic_display="hide"
 				data-conditional_logic_display_if="any"
 				data-conditional_rule_addon="695-0"
 				data-conditional_rule_addon_is="selected"
@@ -471,7 +371,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <div id="yith-wapo-option-696-0"
 	class="yith-wapo-option selection-multiple "
 	data-replace-image="">
-	{% if gender=="Male" %}
+	
 	<div class="label ">
 
 		<div class="option-container">
@@ -510,7 +410,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 	</div>
-	{% endif %}
+	
 	<!-- DESCRIPTION -->
 	
 	<!-- TOOLTIP -->
@@ -520,7 +420,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <div id="yith-wapo-option-696-1"
 	class="yith-wapo-option selection-multiple "
 	data-replace-image="">
-    {% if gender=="Male" %}
+    
 	<div class="label ">
 
 		<div class="option-container">
@@ -533,8 +433,8 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
                     <input type="checkbox"
                            id="yith-wapo-696-1"
                            class="yith-wapo-option-value"
-                           name="mens_doubles"
-                           value="Men’s Doubles"
+                           name="Men's Doubles"
+                           value="Men's Doubles"
                            data-price="0"
                                                     data-price-sale="undefined"
                                                     data-price-type="fixed"
@@ -559,7 +459,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 	</div>
-	{% endif %}
+
 	<!-- DESCRIPTION -->
 	
 	<!-- TOOLTIP -->
@@ -582,7 +482,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
                     <input type="checkbox"
                            id="yith-wapo-696-2"
                            class="yith-wapo-option-value"
-                           name="mixed_doubles"
+                           name="Mixed Doubles"
                            value="Mixed Doubles"
                            data-price="0"
                                                     data-price-sale="undefined"
@@ -618,7 +518,9 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 					
 			</div>
 
-			
+		{% endif %}
+
+{% if gender=="Female" %}
 			<div id="yith-wapo-addon-697"
 				class="yith-wapo-addon yith-wapo-addon-type-checkbox  default-closed toggle-closed conditional_logic   "
 				data-min=""
@@ -626,7 +528,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 				data-exa=""
 				data-addon-type="checkbox"
                  								data-addon_id="697"
-				data-conditional_logic_display="show"
+				data-conditional_logic_display="hide"
 				data-conditional_logic_display_if="any"
 				data-conditional_rule_addon="695-1"
 				data-conditional_rule_addon_is="selected"
@@ -652,7 +554,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <div id="yith-wapo-option-697-0"
 	class="yith-wapo-option selection-multiple "
 	data-replace-image="">
-    {% if gender=="Female" %}
+    
 	<div class="label ">
 
 		<div class="option-container">
@@ -665,8 +567,8 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
                     <input type="checkbox"
                            id="yith-wapo-697-0"
                            class="yith-wapo-option-value"
-                           name="womens_single"
-                           value="Women’s Single"
+                           name="Women's Single"
+                           value="Women's Single"
                            data-price="0"
                                                     data-price-sale="undefined"
                                                     data-price-type="fixed"
@@ -691,7 +593,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 	</div>
-	{% endif %}
+	
 	<!-- DESCRIPTION -->
 	
 	<!-- TOOLTIP -->
@@ -701,7 +603,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <div id="yith-wapo-option-697-1"
 	class="yith-wapo-option selection-multiple "
 	data-replace-image="">
-	{% if gender=="Female" %}
+	
 	<div class="label ">
 
 		<div class="option-container">
@@ -714,8 +616,8 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
                     <input type="checkbox"
                            id="yith-wapo-697-1"
                            class="yith-wapo-option-value"
-                           name="womens_doubles"
-                           value="Women’s Doubles"
+                           name="Women's Doubles"
+                           value="Women's Doubles"
                            data-price="0"
                                                     data-price-sale="undefined"
                                                     data-price-type="fixed"
@@ -740,7 +642,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 	</div>
-	{% endif %}
+	
 	<!-- DESCRIPTION -->
 	
 	<!-- TOOLTIP -->
@@ -764,7 +666,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
                            id="yith-wapo-697-2"
                            class="yith-wapo-option-value"
-                           name="mixed_doubles"
+                           name="Mixed Doubles"
                            value="Mixed Doubles"
                            data-price="0"
                                                     data-price-sale="undefined"
@@ -795,6 +697,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 	<!-- TOOLTIP -->
 		<!-- Sold individually -->
 	</div>
+	{% endif %}
 					</div>
                                     </div>
 					
