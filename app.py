@@ -537,6 +537,7 @@ def edit_profile():
         cursor.execute("select mobileno from register where id =%s",[eid])
         mobile=cursor.fetchone()[0]
         cursor.close()
+        print(os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),'static','uploads','photos')))
         for i in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),'static','uploads','photos')):
             print(i.split('.')[0])
             if i.split('.')[0]==str(mobile):
