@@ -19,7 +19,9 @@ app.secret_key = secret_key
 app.config['SESSION_TYPE'] = 'filesystem'
 excel.init_excel(app)
 Session(app)
-#mydb = mysql.connector.connect(host='localhost', user='root', password='Eswar@2001', db='doctors',pool_name='DED',pool_size=30)
+
+mydb = mysql.connector.connect(host='localhost', user='root', password='Eswar@2001', db='doctors',pool_name='DED',pool_size=30)
+'''
 db= os.environ['RDS_DB_NAME']
 user=os.environ['RDS_USERNAME']
 password=os.environ['RDS_PASSWORD']
@@ -33,9 +35,9 @@ with mysql.connector.connect(host=host,user=user,password=password,db=db) as con
     cursor.execute("insert into games values(('ATHLETICS',1500,1),('ARCHERY',1500,1),('BADMINTON',1500,2),('BASKETBALL',10000,9),('BALL BADMINTON',10000,7),('CARROMS',1500,2),('CHESS',1500,1),('CYCLOTHON',1500,1),('JUMPS',1500,1),('SWIMMING',1500,1),('THROW',1500,1),('ROWING',1500,1),('SHOOTING',1500,1),('ROLLER SKATING',1500,1),('FENCING',1500,1),('TENNIKOIT',1500,1),('TABLE TENNIS',1500,2),('LAWN TENNIS',1500,2),('CRICKET WHITE BALL',30000,14),('HARD TENNIS CRICKET',20000,14),('WOMEN BOX CRICKET',10000,7),('VOLLEY BALL',10000,9),('FOOTBALL',10000,11),('KHO KHO',10000,12),('KABADDI',10000,10),('THROWBALL',10000,10),('TUG OF WAR',5000,10))")
     cursor.execute("create table if not exists payments(ordid varchar(36),id int,game enum('ATHLETICS','ARCHERY','BADMINTON','BASKETBALL','BALL BADMINTON','CARROMS','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS','CRICKET WHITE BALL','HARD TENNIS CRICKET','WOMEN BOX CRICKET','VOLLEY BALL','FOOTBALL','KHO KHO','KABADDI','THROW BALL','TUG OF WAR'),date timestamp default now() on update now(),foreign key(id) references register(id))")
     cursor.execute("CREATE TABLE if not exists sub_games (game enum('ATHLETICS','ARCHERY','BADMINTON','BASKETBALL','BALL BADMINTON','CARROMS','CHESS','CYCLOTHON','JUMPS','WALKATHON','SWIMMING','TENNKOIT','THROW','ROWING','ROLLER SKATING','FENCING','SHOOTING','TABLE TENNIS','LAWN TENNIS','CRICKET WHITE BALL','HARD TENNIS CRICKET','WOMEN BOX CRICKET','VOLLEY BALL','FOOTBALL','KHO KHO','KABADDI','THROW BALL','TUG OF WAR'),id int primary key(id) ,category varchar(50),team_number varchar(10) unique, date timestamp default current_timestamp on update current_timestamp,foreign key(id) reference register(id))")
-    cursor.execute("create table if not exists teams(teamid int,id int,status enum('Accept','Pending'),foreign key(teamid) references sub_games(team_number),foreign key(id) references register(id))")
+    cursor.execute("create table if not exists teams(teamid int,id int,status enum('Accept','Pending'),foreign key(teamid) references sub_games(team_number),foreign key(id) references register(id))")'''
 
-mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,pool_name='DED',pool_size=30)
+#mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,pool_name='DED',pool_size=30)
 
 stripe.api_key='sk_test_51NTKipSDmVNK7hRpj4DLpymMTojbp0sntuHknEF9Kv3cGY79VkNbmBcfxDmTLXa9UIGKiiqp8drQQhzsjoia58Sm00Kuzg9vYt'
 
@@ -188,7 +190,7 @@ def register(user_accept):
 
                 return render_template('register.html',message=message)
             elif count1 == 1:
-                flash('Email already in use')
+                message='Email already in use'
                 return render_template('register.html',message=message)
 
 
@@ -215,6 +217,9 @@ def register(user_accept):
             session.pop('email')
             session['user']=eid
             flash ('Registration successful! Complete the payment process.')
+            subject='IMA Doctors Olympiad Registration'
+            body=f'Thanks for the registration your unique for future reference is {eid}'
+            sendmail(to=email, subject=subject, body=body)
             return redirect(url_for('payment',eid=eid,game=data['game']))
         return render_template('register.html',message='')
     else:
@@ -404,7 +409,7 @@ def success(eid,ref,game,amount):
     cursor = mydb.cursor(buffered=True)
     cursor.execute('SELECT status from register WHERE id=%s', [eid])
     status=cursor.fetchone()[0]
-    cursor.execute('select gander from register where id=%s',[eid])
+    cursor.execute('select gender from register where id=%s',[eid])
     gender=cursor.fetchone()[0]
     if status=='pending':
         cursor.execute('update register set status=%s WHERE ID=%s',['success',eid])
@@ -524,8 +529,13 @@ def edit_profile():
         eid=session.get('user')
         cursor.execute("select * from register where id =%s",[eid])
         data=cursor.fetchone()
-        print(data)
+        cursor.execute("select mobileno from register where id =%s",[eid])
+        mobile=cursor.fetchone()[0]
         cursor.close()
+        for i in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),'static','uploads','photos')):
+            print(i.split('.')[0])
+            if i.split('.')[0]==str(mobile):
+                filename=i
         if request.method=='POST':
             firstname=request.form['fname']
             print(firstname)
@@ -544,8 +554,15 @@ def edit_profile():
             cursor.execute('update register set FirstName=%s,LastName=%s,Email=%s,mobileno=%s,age=%s,gender=%s,DOB=%s,city=%s,address=%s,state=%s,country=%s,SHIRT_SIZE=%s where id=230024',[firstname,lastname,email,mobile,age,gender,dob,city,address,state,country,shirtsize])
             mydb.commit()
             cursor.close()
-            return redirect(url_for('home'))
-        return render_template('edits.html',data=data)
+            cursor=mydb.cursor(buffered=True)
+            eid=session.get('user')
+            cursor.execute("select * from register where id =%s",[eid])
+            data=cursor.fetchone()
+            cursor.execute("select mobileno from register where id =%s",[eid])
+            mobile=cursor.fetchone()[0]
+            cursor.close()
+            flash('Profile updated')
+        return render_template('edits.html',data=data,filename=filename)
     else:
         return redirect(url_for('login'))
 @app.route('/all payments')
@@ -613,7 +630,7 @@ def registeredgame(game):
         cursor.close()
         if count>=1:
             flash('Already registered!refer your games profile')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('individual'))
         if request.method=='POST':
             cursor = mydb.cursor(buffered=True)
             for i in request.form:
@@ -623,7 +640,7 @@ def registeredgame(game):
             subject='Doctors Olympiad Games registration'
             body=f'You are successfully registered to {" ".join(request.form.values())}\n\nThanks and regards\nDoctors Olympiad 2023'
             sendmail(email_id,subject,body)
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('individual'))
         return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
     elif game =='JUMPS':
         cursor = mydb.cursor(buffered=True)
@@ -762,7 +779,7 @@ def registeredgame(game):
                 return redirect(url_for('dashboard'))
         return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
     
-    elif game in ('BADMINTON','TABLETENNIS','LAWNTENNIS','CARROM'):
+    elif game in ('BADMINTON','TABLETENNIS','LAWNTENNIS','CARROMS'):
         singles=["Women's Single","Men's Single"]
         cursor = mydb.cursor(buffered=True)
         cursor.execute('select category from sub_games where game=%s and id=%s',[game,session.get('user')])
@@ -802,7 +819,7 @@ def registeredgame(game):
 
         return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
     else:
-        return render_template(f'/games-individual-team/team/{game}.html',gender=gender)
+        return render_template(f'/games-individual-team//{game}.html',gender=gender)
     
 
 if __name__ == '__main__':

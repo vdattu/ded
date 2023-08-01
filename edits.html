@@ -242,11 +242,10 @@
 
     </style>
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary  shadow-sm py-3">
         <div class="container-fluid px-4">
-          <a class="navbar-brand" href="#"><img src="{{url_for('static',filename='Logo.png')}}" width="250px" alt=""></a>
+          <a class="navbar-brand" href="#"><img src="./Logo.png" width="250px" alt=""></a>
           <button class=" navToggleBtn  " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list"></i>
           </button>
@@ -313,27 +312,18 @@
       <section class="gamesSection">
         <div class="container">
           <div class="media align-items-center py-3 mb-3">
-            <img src="{{url_for('static',filename='uploads/photos/'+filename)}}" alt="" class="d-block ui-w-50 rounded-circle">
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-50 rounded-circle">
             <div class="media-body ml-4"><br>
               <br>
               <br>
-              <h4 class="font-weight-bold mb-0">{{data[1]}} {{data[2]}} <span class="text-muted font-weight-normal">{{data[3]}}</span></h4>
-              <div class="text-muted mb-2">ID: {{data[0]}}</div>
+              <h4 class="font-weight-bold mb-0">John Doe <span class="text-muted font-weight-normal">@johndoe</span></h4>
+              <div class="text-muted mb-2">ID: 3425433</div>
               <a href="javascript:void(0)" class="btn btn-primary btn-sm">Profile</a>&nbsp;
 
               <a href="javascript:void(0)" class="btn btn-default btn-sm icon-btn"><i class="fa fa-mail"></i></a>
             </div>
           </div>
         </div>
-        {% with messages = get_flashed_messages() %}
-						{% if messages %}
-						
-							{% for message in messages %}
-							<center>{{ message }}</center>
-							{% endfor %}
-						
-						{% endif %}
-						{% endwith %}
         
 `
         <form method="POST">
@@ -342,7 +332,7 @@
             <input type="text" name="fname" value="{{data[1]}}">
             <label>Last Name</label>
             <input type="text" name="lname" value="{{data[2]}}">
-            <label>Email</label>
+            <label>Email42424242de</label>
             <input type="email" name="email" value="{{data[3]}}">
             <label>Mobile Number</label>
             <input type="tel" name="mobile" value="{{data[5]}}" pattern="[0-9()#&amp;+*-=.]+" title="Only numbers and phone characters (#, -, *, etc) are accepted.">
@@ -395,8 +385,10 @@
             </select>
             <label>Country</label>
             <select name="country">
-               
-                <option value="{{data[12]}}" selected>{{data[12]}}</option>
+                <option value="Afghanistan">Afghanistan</option>
+                      
+                      <option value="India">India</option>
+                                        <option value="{{data[12]}}" selected>{{data[12]}}</option>
                 <!-- Options for countries here -->
             </select>
             <label>Degree-MBBS(Compulsory)</label>
@@ -432,10 +424,10 @@
                 <option value="{{data[16]}}" selected>{{data[16]}}</option>
     
             </select>
-            <!--<label>Upload IMA or MBBS certificate</label>
+            <label>Upload IMA or MBBS certificate</label>
             <input type="file" name="certificate" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
             <label>Upload Photo</label>
-            <input type="file" name="photo" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">-->
+            <input type="file" name="photo" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
             <button>submit</button>
         </form>
     </body>
