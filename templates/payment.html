@@ -83,18 +83,16 @@
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-<ul>
     {% for message in messages %}
-    <li>{{ message }}</li>
+    <center><li>{{ message }}</li></center>
     {% endfor %}
-</ul>
 {% endif %}
 {% endwith %}
 
 <body>
+    <center><h1 style="color:aliceblue;">*Once payment is done,no refund can be issued</h1></center>
     <div class="container">
         {% for i in data1 %}
-
         <form autocomplete="off" action="{{url_for('pay',eid=eid,ref=ref,game=game)}}" method="POST">
             <div>
                 <label for="fullName"><i class="fa-regular fa-address-card"></i> ID</label>

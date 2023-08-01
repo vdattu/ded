@@ -547,12 +547,19 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 								<input type="file" name="certificate" id="certificate" class="elementor-field elementor-size-sm  elementor-upload-field" required="required" aria-required="true" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
 
 						</div>
-								<div class="elementor-field-type-upload elementor-field-group elementor-column elementor-field-group-field_224d785 elementor-col-100 elementor-field-required elementor-mark-required">
-												<label for="form-field-field_224d785" class="elementor-field-label">
-								Upload Photo							</label>
-								<input type="file" name="photo" id="photo" class="elementor-field elementor-size-sm  elementor-upload-field" required="required" aria-required="true" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
+								
+						<div class="elementor-field-type-upload elementor-field-group elementor-column elementor-field-group-field_224d785 elementor-col-100 elementor-field-required elementor-mark-required">
+							<label for="form-field-field_224d785" class="elementor-field-label">
+			Upload Photo							</label>
+			<input type="file" name="photo" id="photo" class="elementor-field elementor-size-sm  elementor-upload-field" required="required" aria-required="true" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
+			<div class="elementor-field-type-upload elementor-field-group elementor-column elementor-field-group-field_224d785 elementor-col-100 elementor-field-required elementor-mark-required" style="margin-left: 300px; margin-top: 0px; margin-bottom: 0px; bottom: 55px;">
+				<label for="form-field-field_224d785" class="elementor-field-label">
+				  Upload Photo
+				</label>
+				<input type="file" name="dobfile" id="dobfile" class="elementor-field elementor-size-sm elementor-upload-field" required="required" aria-required="true" data-maxsize="5" data-maxsize-message="This file exceeds the maximum allowed size.">
+			  </div>
+	</div>
 
-						</div>
 						<button id="generateOTP" class="btn btn-danger" >Send OTP</button>
 						<div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-field_acc54c8 elementor-col-50 elementor-field-required elementor-mark-required">
 							<label  for="form-field-field_acc54c8" class="otp-css elementor-field-label">
@@ -677,6 +684,9 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 												var otp= $('#otp').val();
 												var certificate =$('#certificate')[0].files[0]; 
 												var photo = $('#photo')[0].files[0];
+												var dobfile = $('#dobfile')[0].files[0];
+
+
 												if(otp==""){
 													alert("Please enter the otp");
 													return false
@@ -705,6 +715,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 														photo:photo,
 														selectmember:selectmember,
 														address:address,
+														dobfile:dobfile,
 													},
 													success: function(response) {
 														
@@ -1002,7 +1013,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 <script type='text/javascript'  src='https://codegnanprojects.wpcomstaging.com/_static/??-eJytj92KAjEMhV9oO8VdGXYvZB9lqWkYM7ZNN00UfXor/uCV3giBAydfziH76oCLYlFfk01Ump9Ra4DtTf92WCKLD6acgyrBbeNSOB4c5TBh85GaeupJ0hCUuDheN5QdyjC3j/1bax6MazgVSBb7fu7zbygHb+SBBYdM5SmU2dprKkqYprBOr8mWKPann2IXGYwGZYONq1Zgc8VD7KdnloTaQ8zdB04srhJs7zW/ebUYv5eL8efzazwBokKwMg=='></script>
-<!-- <script type='text/javascript'>
+<script type='text/javascript'>
 	function imember() {
 	var x = document.getElementById("selectmember").value;
 	if (x==='IMA MEMBER'){
@@ -1012,8 +1023,8 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 		document.getElementById("display-which-certificate").innerHTML = "Upload " + "MBBS"+" Certificate";
 
 	}
-  } -->
-			  <!-- </script> -->
+  } 
+			  </script>
 </body>
 </html>
 <!--

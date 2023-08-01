@@ -44,6 +44,8 @@ stripe.api_key='sk_test_51NTKipSDmVNK7hRpj4DLpymMTojbp0sntuHknEF9Kv3cGY79VkNbmBc
 # Configure the upload folder
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/uploads/certificates')
 app.config['UPLOAD_FOLDERS'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/uploads/photos')
+app.config['UPLOAD_FOLDERSS'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/uploads/dob')
+
 
 bcrypt = Bcrypt(app)
 
@@ -146,8 +148,7 @@ def register(user_accept):
             selectmember = request.form['selectmember']
             shirtsize = request.form['shirtsize']
             otp=request.form['otp']
-            print(session['otp'])
-            print(session.get('email'))
+            dobfile=request.files['dobfile']
             cond=True if session.get('email') else False
             if cond!=True:
                 message='Please verify your email'
@@ -163,10 +164,14 @@ def register(user_accept):
             # Generate unique filenames for certificate and photo using UUID
             certificate_filename = f'{mobile}.{certificate_file.filename.split(".")[-1]}'
             photo_filename = f'{mobile}.{photo_file.filename.split(".")[-1]}'
+            dob_filename = f'{mobile}.{dobfile.filename.split(".")[-1]}'
+
 
             # Save the certificate and photo files to the upload folder
             certificate_file.save(os.path.join(app.config['UPLOAD_FOLDER'], certificate_filename))
             photo_file.save(os.path.join(app.config['UPLOAD_FOLDERS'], photo_filename))
+            dobfile.save(os.path.join(app.config['UPLOAD_FOLDERSS'], dob_filename))
+
             
             if selectmember == 'IMA Member':
                 amount = 3500

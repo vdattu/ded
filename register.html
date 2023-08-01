@@ -1007,7 +1007,11 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <script type='text/javascript'>
 	function imember() {
 	var x = document.getElementById("form-field-field_89f0129").value;
-	document.getElementById("display-which-certificate").innerHTML = "Upload " + x+" Certificate";
+	if (x=='IMA MEMBER'){
+		document.getElementById("display-which-certificate").innerHTML = "Upload " + "MBBS or IMA"+" Certificate";
+		}else if(x!=="IMA MEMBER"){
+			document.getElementById("display-which-certificate").innerHTML = "Upload " + "IMA"+" Certificate";
+	}
   }
 			  </script>
 		  <div class="modal-backdrop fade show"></div>
