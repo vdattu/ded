@@ -149,13 +149,28 @@ def register(user_accept):
             shirtsize = request.form['shirtsize']
             otp=request.form['otp']
             dobfile=request.files['dobfile']
+            cursor = mydb.cursor(buffered=True)
+            # cursor.execute('SELECT COUNT(*) FROM register WHERE CONCAT(FirstName, " ", LastName) = %s', [full_name])
+            # count = cursor.fetchone()[0]
+            cursor.execute('SELECT COUNT(*) FROM register WHERE Email = %s', [email])
+            count1 = cursor.fetchone()[0]
+            cursor.execute('SELECT COUNT(*) FROM register WHERE mobileno = %s', [mobile])
+            count2 = cursor.fetchone()[0]
+            cursor.close()
+            if count2 == 1:
+                message='Mobile number already exists.'
+
+                return render_template('register.html',message=message)
+            if count1 == 1:
+                message='Email already in use'
+                return render_template('register.html',message=message)
             cond=True if session.get('email') else False
             if cond!=True:
                 message='Please verify your email'
-                render_template('register.html',message=message)
-            elif session['otp']!=otp:
+                return render_template('register.html',message=message)
+            if session['otp']!=otp:
                 message='Invalid OTP'
-                render_template('register.html',message=message)
+                return render_template('register.html',message=message)
             email=email if session.get('email')==request.form['email'] else session.get('email')
             # Get the uploaded certificate and photo files
             certificate_file = request.files['certificate']
@@ -180,25 +195,7 @@ def register(user_accept):
             
             full_name = fname + ' ' + lname  # Combine first name and last name
 
-            cursor = mydb.cursor(buffered=True)
-            # cursor.execute('SELECT COUNT(*) FROM register WHERE CONCAT(FirstName, " ", LastName) = %s', [full_name])
-            # count = cursor.fetchone()[0]
-            cursor.execute('SELECT COUNT(*) FROM register WHERE Email = %s', [email])
-            count1 = cursor.fetchone()[0]
-            cursor.execute('SELECT COUNT(*) FROM register WHERE mobileno = %s', [mobile])
-            count2 = cursor.fetchone()[0]
-            cursor.close()
-
-
-            if count2 == 1:
-                message='Mobile number already exists.'
-
-                return render_template('register.html',message=message)
-            elif count1 == 1:
-                message='Email already in use'
-                return render_template('register.html',message=message)
-
-
+            
             # Hash the password using bcrypt
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             
@@ -288,9 +285,10 @@ def generate_otp():
     otp = ''.join(random.choices('0123456789', k=6))
     print(otp)
     if 'email' in session:
+        session.pop('email')
+        session.pop('otp')
         session['email']=email
         session['otp']=otp
-        session.modified=True
     else:
         session['email']=email
         session['otp']=otp
