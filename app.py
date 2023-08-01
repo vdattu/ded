@@ -32,8 +32,8 @@ with mysql.connector.connect(host=host,user=user,password=password,db=db) as con
     cursor.execute("DROP table if exists game")
     cursor.execute("DROP table if exists games")
     cursor.execute("DROP table if exists payments")
-    cursor.execute("DROP table if exists sub_games")
     cursor.execute("DROP table if exists teams")
+    cursor.execute("DROP table if exists sub_games")
     cursor.execute("DROP table if exists register")
    
 
