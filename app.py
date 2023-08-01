@@ -424,7 +424,7 @@ def success(eid,ref,game,amount):
                 cursor.execute('insert into sub_games (game,id,category) values(%s,%s,%s)',[game,eid,category])
         mydb.commit()
         cursor.close()
-        flash('Payment Successful ! Login in to continue.')
+        flash('Payment Successful !')
         return redirect(url_for('dashboard'))
     else:
         cursor.execute('INSERT into payments (ordid,id,game,amount) VALUES (%s,%s,%s,%s)',[ref,eid,game,amount])
