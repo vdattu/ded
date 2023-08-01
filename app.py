@@ -54,7 +54,7 @@ def home():
     return render_template('index.html')
 @app.route('/national_committee')
 def national_committee():
-    return render_template('national-committee.html')
+    return render_template('national-committe.html')
 
 
 
