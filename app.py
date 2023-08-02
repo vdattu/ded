@@ -538,6 +538,7 @@ def dashboard():
 @app.route('/edit',methods=['GET','POST'])
 def edit_profile():
     if session.get('user'):
+        print(os.listdir(os.path.dirname(os.path.abspath(__file__))))
         cursor=mydb.cursor(buffered=True)
         eid=session.get('user')
         cursor.execute("select * from register where id =%s",[eid])
