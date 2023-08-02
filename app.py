@@ -546,7 +546,7 @@ def edit_profile():
         data=cursor.fetchone()
         cursor.execute("select mobileno from register where id =%s",[eid])
         mobile=cursor.fetchone()[0]
-        print(mobile)
+        print('user mobile',mobile)
         cursor.close()
         print(os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),'static','uploads','photos')))
         for i in os.listdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),'static','uploads','photos')):
