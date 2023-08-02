@@ -462,6 +462,12 @@ def dashboard():
 @app.route('/sport/<game>',methods=['GET','POST'])
 def sport(game):
     if session.get('user'):
+        base_path=os.path.dirname(os.path.abspath(__file__))
+        print(os.listdir(os.path.join(base_path,'templates','games-individual-team')))
+        print(os.listdir(os.path.join(base_path,'templates','games-individual-team','individual')))
+        print(os.listdir(os.path.join(base_path,'templates','games-individual-team','Team')))
+
+        
         cursor = mydb.cursor(buffered=True)
         cursor.execute('select count(*) from game where game=%s and id=%s',[game,session.get('user')])
         count = cursor.fetchone()[0]
