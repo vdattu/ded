@@ -129,6 +129,8 @@ def rules():
 @app.route('/register/<user_accept>', methods=['GET', 'POST'])
 def register(user_accept):
     if user_accept=='Yes':
+        print(os.lisdir(os.path.dirname(os.path.abspath(__file__))))
+
 
         if request.method == 'POST':
             acception = user_accept
