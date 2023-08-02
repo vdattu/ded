@@ -466,7 +466,7 @@ def sport(game):
     if session.get('user'):
         base_path=os.path.dirname(os.path.abspath(__file__))
         print(os.listdir(os.path.join(base_path,'templates','games-individual-team')))
-        print(os.listdir(os.path.join(base_path,'templates','games-individual-team','individual')))
+        print(os.listdir(os.path.join(base_path,'templates','games-individual-team','Individual')))
         print(os.listdir(os.path.join(base_path,'templates','games-individual-team','Team')))
 
         
