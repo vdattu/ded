@@ -629,6 +629,10 @@ def buyaddon(game):
         return redirect(url_for('login'))
 @app.route('/registeredgame/<game>',methods=['GET','POST'])
 def registeredgame(game):
+    base_path=os.path.dirname(os.path.abspath(__file__))
+    print(os.listdir(os.path.join(base_path,'templates','games-individual-team')))
+    print(os.listdir(os.path.join(base_path,'templates','games-individual-team','individual')))
+    print(os.listdir(os.path.join(base_path,'templates','games-individual-team','Team')))
     cursor = mydb.cursor(buffered=True)
     cursor.execute('select gender from register where id=%s',[session.get('user')])
     gender=cursor.fetchone()[0]
