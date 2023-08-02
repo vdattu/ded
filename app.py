@@ -662,7 +662,7 @@ def registeredgame(game):
             body=f'You are successfully registered to {" ".join(request.form.values())}\n\nThanks and regards\nDoctors Olympiad 2023'
             sendmail(email_id,subject,body)
             return redirect(url_for('individual'))
-        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+        return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
     elif game =='JUMPS':
         cursor = mydb.cursor(buffered=True)
         cursor.execute('select count(*) from sub_games where game=%s and id=%s',[game,session.get('user')])
@@ -684,7 +684,7 @@ def registeredgame(game):
                 body=f'You are successfully registered to {" ".join(request.form.values())}\n\nThanks and regards\nDoctors Olympiad 2023'
                 sendmail(email_id,subject,body)
                 return redirect(url_for('dashboard'))
-        return render_template(f'/games-individual-team/individual/{game}.html')
+        return render_template(f'/games-individual-team/Individual/{game}.html')
     elif game=='SWIMMING':
         cursor = mydb.cursor(buffered=True)
         cursor.execute('select count(*) from sub_games where game=%s and id=%s',[game,session.get('user')])
@@ -703,7 +703,7 @@ def registeredgame(game):
             styles={i for i in request.form.keys() if i in s_styles}
             if len(styles)==0:
                 flash('Select a category')
-                return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+                return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
             values=set(request.form.values())
             form_values=values.difference(s_styles)
             for i in styles:
@@ -738,7 +738,7 @@ def registeredgame(game):
                 body=f'You are successfully registered to {"/n".join(values)}\n\nThanks and regards\nDoctors Olympiad 2023'
                 sendmail(email_id,subject,body)
                 return redirect(url_for('dashboard'))
-        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+        return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
 
     elif game=='ATHLETICS':
         cursor = mydb.cursor(buffered=True)
@@ -765,7 +765,7 @@ def registeredgame(game):
 
             if len(styles)==0:
                 flash('Select a category')
-                return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+                return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
             for i in styles:
                 if i=='Sprint':
                     result1=s_styles.difference(form_values)
@@ -798,7 +798,7 @@ def registeredgame(game):
                 body=f'You are successfully registered to {" ".join(values)}\n\nThanks and regards\nDoctors Olympiad 2023'
                 sendmail(email_id,subject,body)
                 return redirect(url_for('dashboard'))
-        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+        return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
     
     elif game in ('BADMINTON','TABLETENNIS','LAWNTENNIS','CARROMS'):
         singles=["Women's Single","Men's Single"]
@@ -838,9 +838,9 @@ def registeredgame(game):
             else:
                 pass
 
-        return render_template(f'/games-individual-team/individual/{game}.html',gender=gender)
+        return render_template(f'/games-individual-team/Individual/{game}.html',gender=gender)
     else:
-        return render_template(f'/games-individual-team//{game}.html',gender=gender)
+        return render_template(f'/games-individual-team/Team/{game}.html',gender=gender)
     
 
 if __name__ == '__main__':
